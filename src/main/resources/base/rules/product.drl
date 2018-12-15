@@ -1,0 +1,26 @@
+package rules; //与kmoudle package 关联
+/*dialect设置规则当中要使用的语言类型 ，默认除了java还有mevl
+  mvel是一种嵌入式脚本语言,在规则文件上可以用这种语言建立他们的断言、返回值、Eval和推论。
+  mvel分解析模式(Interpreted Mode)和编译模式(Compiled Mode) */
+dialect  "mvel"
+//引入Product类
+import top.alertcode.example.traindrools.drools.entity.Product
+//规则名称
+rule "product apple"
+    when
+//    判断name是否等于apple
+//    proc 相当于product对象的引用
+        proc:Product(name=="apple")
+    then
+//    满足条件进行处理的逻辑
+        proc.setDiscount(15);
+        proc.setPrint(proc.getName()+":"+proc.getDiscount());
+end
+rule "product orange"
+    when
+//    判断name是否等于orange
+        proc:Product(name=="orange")
+    then
+        proc.setDiscount(20);
+        proc.setPrint(proc.getName()+":"+proc.getDiscount());
+     end
