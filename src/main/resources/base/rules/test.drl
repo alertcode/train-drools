@@ -1,0 +1,11 @@
+package base.rules;
+dialect  "mvel"
+import top.alertcode.example.traindrools.drools.entity.Product
+rule "product apple"
+    when
+        proc:Product(name=="apple")
+    then
+        proc.setDiscount(45678);
+        proc.setPrint(proc.getName()+":"+proc.getDiscount());
+end
+
