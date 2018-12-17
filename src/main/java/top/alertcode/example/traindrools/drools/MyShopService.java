@@ -17,15 +17,16 @@ import top.alertcode.example.traindrools.drools.mapper.RulesMapper;
 @Service
 public class MyShopService {
 
-    /**
-     * KieContainer： KieContainer就是一个KieBase的容器，可以根据kmodule.xml 里描述的KieBase信息来获取具体的KieSession
-     */
-    @Autowired
-    private KieContainer kieContainer;
+  /**
+   * KieContainer： KieContainer就是一个KieBase的容器，可以根据kmodule.xml 里描述的KieBase信息来获取具体的KieSession
+   */
+
+  @Autowired
+  private KieContainer kieContainer;
   @Autowired
   private RulesMapper rulesMapper;
 
-    public Product getProductDiscount(Product product) {
+  public Product getProductDiscount(Product product) {
         KieSession kieSession = kieContainer.newKieSession("productSession");
         kieSession.insert(product);
         kieSession.fireAllRules();
@@ -34,12 +35,27 @@ public class MyShopService {
     }
 
 
+  /**
+   * 经过规则验证后的对象
+   *
+   * @param id
+   *     the id
+   * @param product
+   *     the product
+   * @return the db product
+   */
   public Product getDBProduct(int id, Product product) {
     RuleEntity rule = rulesMapper.getRule(id);
     Assert.notNull(rule, "没有找到数据");
     return (Product) getDatabaseObject(rule, product);
   }
 
+  /**
+   * 根据字符串生成规则文件，KieSession进行读取的主要代码
+   *
+   * @param rule
+   * @param object
+   */
   private Object getDatabaseObject(RuleEntity rule, Object object) {
     KieServices kieServices = KieServices.Factory.get();
     KieFileSystem kfs = kieServices.newKieFileSystem();

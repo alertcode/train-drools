@@ -6,6 +6,6 @@ import top.alertcode.example.traindrools.drools.entity.RuleEntity;
 public interface RulesMapper {
 
   @Select("select * from drools_rules where id=#{id}")
-  public RuleEntity getRule(int id);
+   RuleEntity getRule(int id);
 
 }
